@@ -5,14 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.mymoviesmvc.R;
+import com.example.mymoviesmvc.common.BaseActivity;
 
-public class FavouriteActivity extends AppCompatActivity implements FavouriteActMVP.Presenter
+public class FavouriteActivity extends BaseActivity implements FavouriteActMVP.Presenter
 {
+    private FavouriteActMVP.MVPView mvpView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_favourite);
     }
 }

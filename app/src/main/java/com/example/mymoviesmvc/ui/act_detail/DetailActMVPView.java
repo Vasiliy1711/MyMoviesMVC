@@ -14,12 +14,14 @@ import com.example.mymoviesmvc.adapters.ReviewAdapter;
 import com.example.mymoviesmvc.adapters.TrailerAdapter;
 import com.example.mymoviesmvc.data.Movie;
 import com.example.mymoviesmvc.data.Review;
+import com.example.mymoviesmvc.data.Trailer;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class DetailActMVPView implements DetailActMVP.MVPView
 {
+    private Movie movie;
     private View rootView;
     private LayoutInflater inflater;
     private DetailActMVP.Presenter presenter;
@@ -54,6 +56,25 @@ public class DetailActMVPView implements DetailActMVP.MVPView
         recyclerViewReviews.setAdapter(reviewAdapter);
         recyclerViewTrailers = rootView.findViewById(R.id.recyclerViewTrailers);
         trailerAdapter = new TrailerAdapter();
+        recyclerViewTrailers.setAdapter(trailerAdapter);
+        imageViewAddToFavourite.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                presenter.addToFavourite(getMovie());
+            }
+        });
+    }
+
+    public Movie getMovie()
+    {
+        return movie;
+    }
+
+    public void setMovie(Movie movie)
+    {
+        this.movie = movie;
     }
 
     @Override
@@ -84,6 +105,12 @@ public class DetailActMVPView implements DetailActMVP.MVPView
     {
         reviewAdapter.setReviews(reviews);
         reviewAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setTrailers(List<Trailer> trailers)
+    {
+        trailerAdapter.setTrailers(trailers);
     }
 }
 

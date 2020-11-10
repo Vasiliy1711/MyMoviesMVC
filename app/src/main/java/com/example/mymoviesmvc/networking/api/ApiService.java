@@ -4,6 +4,7 @@ package com.example.mymoviesmvc.networking.api;
 import com.example.mymoviesmvc.data.Review;
 import com.example.mymoviesmvc.networking.pojo.MoviesResponse;
 import com.example.mymoviesmvc.networking.pojo.ReviewsResponse;
+import com.example.mymoviesmvc.networking.pojo.TrailerResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -24,14 +25,9 @@ public interface ApiService
                                                      @Query("api_key") String apiKey,
                                                      @Query("page") String page);
 
+    @GET("3/movie/{movieId}/videos")
+    Observable<TrailerResponse> getTrailerFromNetwork(@Path("movieId") int movieId,
+                                                      @Query("api_key") String apiKey);
+
 
 }
-
-
-
-
-//  api_key=754fa9d8fd80b794d6d14ae8911b68a8"
-
-// api_key=754fa9d8fd80b794d6d14ae8911b68a8&language=ru&sort_by=popularity.desc&vote_count.gte=1000&page=1
-
-// https://api.themoviedb.org/3/discover/movie?api_key=754fa9d8fd80b794d6d14ae8911b68a8&language=ru&sort_by=popularity.desc&vote_count.gte=1000&page=1

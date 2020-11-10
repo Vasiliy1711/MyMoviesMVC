@@ -102,7 +102,6 @@ public class MainActMVPView implements MainActMVP.MVPView
     public void setMovieList(List<Movie> movieList)
     {
         adapter.setMovieList(movieList);
-        adapter.notifyDataSetChanged();
     }
 
     @Override

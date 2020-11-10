@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface MainActMVP
 {
-    interface MVPView
+    interface MVPView    //  generic
     {
         View getRootView();
         void registerPresenter(Presenter presenter);

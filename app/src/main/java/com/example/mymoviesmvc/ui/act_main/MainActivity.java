@@ -1,7 +1,6 @@
 package com.example.mymoviesmvc.ui.act_main;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +11,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.mymoviesmvc.R;
+import com.example.mymoviesmvc.common.BaseActivity;
+import com.example.mymoviesmvc.common.BaseDownloader;
 import com.example.mymoviesmvc.common.Constants;
 import com.example.mymoviesmvc.data.Movie;
-import com.example.mymoviesmvc.networking.downloaders.MoviesDownloader;
 import com.example.mymoviesmvc.networking.pojo.MoviesResponse;
 import com.example.mymoviesmvc.networking.pojo.ServerMovie;
 import com.example.mymoviesmvc.ui.CallBack;
@@ -28,7 +28,7 @@ import static com.example.mymoviesmvc.common.Constants.BASE_POSTER_URL;
 import static com.example.mymoviesmvc.common.Constants.BIG_POSTER_SIZE;
 import static com.example.mymoviesmvc.common.Constants.SMALL_POSTER_SIZE;
 
-public class MainActivity extends AppCompatActivity implements MainActMVP.Presenter
+public class MainActivity extends BaseActivity implements MainActMVP.Presenter
 {
     private MainActMVP.MVPView mvpView;
     private List<Movie> movieList;
@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements MainActMVP.Presen
         mvpView.registerPresenter(this);
         setContentView(mvpView.getRootView());
         downloadData(methodOfSort);
-
     }
 
     @Override
@@ -84,45 +83,30 @@ public class MainActivity extends AppCompatActivity implements MainActMVP.Presen
     {
         Movie movie = movieList.get(position);
         Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-        intent.putExtra("id", movie.getId());
-        intent.putExtra("vote_count", movie.getVoteCount());
-        intent.putExtra("title", movie.getTitle());
-        intent.putExtra("original_title", movie.getOriginalTitle());
-        intent.putExtra("overview", movie.getOverview());
-        intent.putExtra("poster_path", movie.getPosterPath());
-        intent.putExtra("big_poster_path", movie.getBigPosterPath());
-        intent.putExtra("backdrop_path", movie.getBackdropPath());
-        intent.putExtra("vote_average", movie.getVoteAverage());
-        intent.putExtra("release_date", movie.getReleaseDate());
+        intent.putExtra("movie", movie);
         startActivity(intent);
     }
 
     @Override
     public void onSwitchChanged(boolean isChecked)
     {
-        Log.e("SWITCHhhhh", "" + isChecked);
-
         if (isChecked)
         {
             methodOfSort = Constants.SORT_BY_TOP_RATED;
             mvpView.setTextViewColor(true);
-            downloadData(methodOfSort);
         }
         else
         {
             methodOfSort = Constants.SORT_BY_POPULARITY;
             mvpView.setTextViewColor(false);
-            downloadData(methodOfSort);
         }
+        downloadData(methodOfSort);
     }
-
-
-
 
 
     private void downloadData(String methodOfSort)
     {
-        MoviesDownloader.getMoviesFromNetwork(methodOfSort, new CallBack<MoviesResponse>()
+        BaseDownloader.getMoviesFromNetwork(compositeDisposable, methodOfSort, new CallBack<MoviesResponse>()
         {
             @Override
             public void onSuccess(MoviesResponse response)
@@ -148,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements MainActMVP.Presen
                 }
                 mvpView.setMovieList(movieList);
             }
+
             @Override
             public void onError()
             {
@@ -155,55 +140,7 @@ public class MainActivity extends AppCompatActivity implements MainActMVP.Presen
             }
         });
     }
+
 }
 
 
-
-
-
-//    public String getMethodOfSort()
-//    {
-//        return methodOfSort;
-//    }
-//
-//    private void setMethodOfSort(boolean isTopRated)
-//    {
-//        if (isTopRated)
-//        {
-//            mvpView.setTextViewColor(true);
-//        }
-//        else
-//        {
-//            mvpView.setTextViewColor(false);
-//        }
-//    }
-
-//        switchSort.setChecked(false);
-//    public void onClickSetPopularity(View view)
-//    {
-//        setMethodOfSort(false);
-//        switchSort.setChecked(false);
-//    }
-//
-//    public void onClickSetTopRated(View view)
-//    {
-//        setMethodOfSort(true);
-//        switchSort.setChecked(true);
-//    }
-//
-//
-//    private void setMethodOfSort(boolean isTopRated)
-//    {
-//        if (isTopRated)
-//        {
-//            textViewTopRated.setTextColor(getResources().getColor(R.color.colorAccent));
-//            textViewPopularity.setTextColor(getResources().getColor(R.color.colorWhite));
-//            methodOfSort = NetworkUtils.TOP_RATED;
-//        } else
-//        {
-//            textViewTopRated.setTextColor(getResources().getColor(R.color.colorWhite));
-//            textViewPopularity.setTextColor(getResources().getColor(R.color.colorAccent));
-//            methodOfSort = NetworkUtils.POPULARITY;
-//        }
-//        downloadData(methodOfSort, page);
-//    }

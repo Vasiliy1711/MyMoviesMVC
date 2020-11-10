@@ -3,7 +3,9 @@ package com.example.mymoviesmvc.data;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-public class Movie
+import java.io.Serializable;
+
+public class Movie implements Serializable
 {
     @PrimaryKey(autoGenerate = true)
     private int uniqueId;
