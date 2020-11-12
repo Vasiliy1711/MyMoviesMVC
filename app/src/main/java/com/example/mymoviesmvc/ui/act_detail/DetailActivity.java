@@ -19,8 +19,8 @@ import com.example.mymoviesmvc.data.FavouriteMovie;
 import com.example.mymoviesmvc.data.Movie;
 import com.example.mymoviesmvc.data.Review;
 import com.example.mymoviesmvc.data.Trailer;
-import com.example.mymoviesmvc.networking.downloaders.ReviewsDownloader;
-import com.example.mymoviesmvc.networking.downloaders.TrailersDownloader;
+
+
 import com.example.mymoviesmvc.networking.pojo.ReviewsResponse;
 import com.example.mymoviesmvc.networking.pojo.ServerReview;
 import com.example.mymoviesmvc.networking.pojo.ServerTrailer;

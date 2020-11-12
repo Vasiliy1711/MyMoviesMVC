@@ -7,7 +7,8 @@ import android.os.Bundle;
 import com.example.mymoviesmvc.R;
 import com.example.mymoviesmvc.common.BaseActivity;
 
-public class FavouriteActivity extends BaseActivity implements FavouriteActMVP.Presenter
+public class FavouriteActivity extends BaseActivity
+        implements FavouriteActMVP.Presenter
 {
     private FavouriteActMVP.MVPView mvpView;
 
@@ -16,7 +17,8 @@ public class FavouriteActivity extends BaseActivity implements FavouriteActMVP.P
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_favourite);
+        mvpView = new FavouriteActMVPView(getLayoutInflater());
+        mvpView.registerPresenter(this);
+        setContentView(mvpView.getRootView());
     }
 }

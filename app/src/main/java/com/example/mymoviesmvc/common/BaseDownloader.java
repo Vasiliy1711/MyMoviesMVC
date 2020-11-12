@@ -19,7 +19,6 @@ public class BaseDownloader
     private static ApiService apiService = apiFactory.getApiService();
 
 
-
     public static void getMoviesFromNetwork(CompositeDisposable compositeDisposable, String methodOfSort, final CallBack<MoviesResponse> callBack)
     {
         Disposable disposable = apiService.getMoviesFromNetwork(Constants.API_KEY
@@ -98,4 +97,5 @@ public class BaseDownloader
                 });
         compositeDisposable.add(disposable);
     }
+
 }
